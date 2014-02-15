@@ -1,0 +1,25 @@
+
+    Osom
+    ~ a simple LISP implementation in Ruby
+
+                       _
+                      [ ]
+                     (   )
+                      |>|
+                   __/===\__
+                  //| o=o |\\
+                <]  | o=o |  [>
+                    \=====/
+                   / / | \ \
+                  <_________>
+
+    Example:
+
+      require './osom-vm.rb'
+
+      Osom.load # to load the parser
+
+      vm = Osom::VM.new
+      vm.execute vm.compile "(debugprint 1 2 3)"
+
+    Use Bundler!

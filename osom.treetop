@@ -1,0 +1,35 @@
+require './osom.rb'
+
+grammar Osom
+  rule statements
+    statements:(ws* statement:list ws*)* <Osom::Syntax::Statements>
+  end
+
+  rule list
+    '(' ws* contents:( head:(list / number / symbol) rest:(ws+ element:(list / number / symbol))* )? ws* ')' <Osom::Syntax::List>
+  end
+
+  rule symbol
+    symbol:[a-zA-Z]+ <Osom::Syntax::Symbol>
+  end
+
+  rule number
+    sign:sign? integral:integral fractional:fractional? <Osom::Syntax::Number>
+  end
+
+  rule integral
+    [1-9] [0-9]*
+  end
+
+  rule fractional
+    '.' [0-9]+
+  end
+
+  rule sign
+    '-' / '+'
+  end
+
+  rule ws
+    [ \t\n\r]
+  end
+end
