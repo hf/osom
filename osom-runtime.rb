@@ -40,7 +40,8 @@ module Runtime
     class Scope
       def initialize
         @scope = {
-          :nil => nil
+          :nil => nil,
+          :t   => true
         }
 
         define_function :cons, lambda { |l, scope|
@@ -101,6 +102,23 @@ module Runtime
           end
 
           scope[l.head] = l.rest.head
+        }
+
+        # In theory, this should be a macro.
+
+        define_function :if, lambda { |l, scope|
+          condition = l.head
+          truth     = l.rest.head
+
+          if scope[:eval].call(condition, scope) == true
+            return scope[:eval].call(truth, scope)
+          end
+
+          if not l.rest.rest.nil?
+            return scope[:eval].call(l.rest.rest.head, scope)
+          end
+
+          return Cons.new
         }
       end
 
